@@ -1,15 +1,13 @@
 package ifba.saj.progweb.demo_crud.controller;
 
 import ifba.saj.progweb.demo_crud.dto.FuncionarioDTO;
+import ifba.saj.progweb.demo_crud.exception.NotFoundException;
 import ifba.saj.progweb.demo_crud.service.FuncionarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -26,6 +24,14 @@ public class FuncionarioController {
         var model = new ModelAndView();
         model.setViewName("form");
         model.addObject("func", new FuncionarioDTO());
+        return model;
+    }
+
+    @GetMapping("/edit/{id}")
+    public ModelAndView formEdit(@PathVariable Long id) {
+        var model = new ModelAndView();
+        model.setViewName("form");
+        model.addObject("func", service.findOne(id));
         return model;
     }
 
